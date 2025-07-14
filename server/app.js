@@ -10,7 +10,12 @@ dotenv.config();
 const app = express();
 connectDB();
 
-app.use(cors());
+app.use(cors({
+  origin: ['book-number.vercel.app'], // 👈 your frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true
+}));
+
 app.use(express.json()); // Body parser
 
 app.use('/api/bookings', bookingRoutes);
