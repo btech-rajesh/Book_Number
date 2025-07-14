@@ -2,7 +2,7 @@ import React from 'react';
 
 function ExportBookings() {
   const handleExport = () => {
-    window.open('http://localhost:5000/api/bookings/excel', '_blank');
+    window.open('https://book-number.onrender.com/api/bookings/excel', '_blank');
   };
 
   return (
