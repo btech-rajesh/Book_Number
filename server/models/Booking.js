@@ -20,7 +20,7 @@ const BookingSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: [true, 'Please enter your email.'],
+    required: false,
     unique: false,
     trim: true,
     lowercase: true,

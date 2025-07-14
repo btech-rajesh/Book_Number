@@ -12,13 +12,13 @@ const getStartOfDayUTC = (date) => {
 
 
 export const bookNumber = async (req, res) => {
-  const { number, userName, phoneNumber, email } = req.body;
+  const { number, userName, phoneNumber } = req.body;
 
   // 1. Basic input validation
-  if (!number || !userName || !phoneNumber || !email) {
-    return res.status(400).json({ message: 'Please provide all required fields: number, name, phone number, and email.' });
+  if (!number || !userName || !phoneNumber) {
+    return res.status(400).json({ message: 'Please provide all required fields: number, name, and phone number.' });
   }
-
+ 
   // Validate the number range (1-100)
   if (number < 1 || number > 100) {
     return res.status(400).json({ message: 'The number must be between 1 and 100.' });
@@ -30,14 +30,22 @@ export const bookNumber = async (req, res) => {
     const todayStartUTC = getStartOfDayUTC(new Date());
 
     // 3. Check if the number is already booked for the current normalized day
-    const existingBooking = await Booking.findOne({
+    const existingBookingNumber = await Booking.findOne({
       number,
       bookingDate: todayStartUTC,
     });
 
-    if (existingBooking) {
+    if (existingBookingNumber) {
       // If a booking exists for this number on this day, return a conflict error
       return res.status(409).json({ message: 'This number is already booked for today. Please choose another.' });
+    }
+    const existingBookingPhone = await Booking.findOne({
+      phoneNumber,
+      bookingDate: todayStartUTC,
+    });
+
+    if (existingBookingPhone) {
+      return res.status(409).json({ message: 'You have already booked a number using this Phone Number, Please choose another!' });
     }
 
     // 4. Create a new booking record in the database
@@ -45,9 +53,9 @@ export const bookNumber = async (req, res) => {
       number,
       userName,
       phoneNumber,
-      email,
       bookingDate: todayStartUTC, // Store the normalized date
     });
+  
 
     // 5. Send a success response
     res.status(201).json({
@@ -143,7 +151,6 @@ export const exportBookingsToExcel = async (req, res) => {
       { header: 'Number', key: 'number', width: 10 },
       { header: 'User Name', key: 'userName', width: 20 },
       { header: 'Phone Number', key: 'phoneNumber', width: 15 },
-      { header: 'Email', key: 'email', width: 25 },
       { header: 'Booking Date', key: 'bookingDate', width: 20 },
       { header: 'Created At', key: 'createdAt', width: 20 },
     ];
@@ -153,7 +160,6 @@ bookings.forEach((booking) => {
     number: booking?.number ?? '',
     userName: booking?.userName ?? '',
     phoneNumber: booking?.phoneNumber ?? '',
-    email: booking?.email ?? '',
     bookingDate: booking?.bookingDate ? new Date(booking.bookingDate).toISOString().split('T')[0] : '',
     createdAt: booking?.createdAt ? new Date(booking.createdAt).toISOString() : '',
   });
