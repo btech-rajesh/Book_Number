@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+
 function Booking() {
   const [availableNumbers, setAvailableNumbers] = useState([]);
   // State to store the number currently selected by the user for booking
@@ -7,8 +8,8 @@ function Booking() {
   // State to manage the form data (name, phone, email)
   const [formData, setFormData] = useState({
     userName: '',
-    phoneNumber: '',
-    email: '',
+    phoneNumber: ''
+   
   });
   // State for displaying messages to the user (success or error)
   const [message, setMessage] = useState({ type: '', text: '' });
@@ -87,18 +88,13 @@ function Booking() {
     setIsLoading(true); // Set loading state to true
 
     // Client-side validation for form fields
-    if (!formData.userName || !formData.phoneNumber || !formData.email) {
-      setMessage({ type: 'error', text: 'Please fill in all details (Name, Phone, Email).' });
+    if (!formData.userName || !formData.phoneNumber) {
+      setMessage({ type: 'error', text: 'Please fill in all details (Name, Phone).' });
       setIsLoading(false);
       return;
     }
-    // Basic email regex validation
-    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (!emailRegex.test(formData.email)) {
-      setMessage({ type: 'error', text: 'Please enter a valid email address.' });
-      setIsLoading(false);
-      return;
-    }
+   
+
     // Basic 10-digit phone number validation
     const phoneRegex = /^\d{10}$/;
     if (!phoneRegex.test(formData.phoneNumber)) {
@@ -112,7 +108,7 @@ function Booking() {
       number: selectedNumber,
       userName: formData.userName,
       phoneNumber: formData.phoneNumber,
-      email: formData.email,
+     
     };
     console.log('Sending request body:', requestBody); // Log the exact data being sent
 
@@ -150,7 +146,7 @@ function Booking() {
    * Clears messages after a short delay for better user experience.
    */
   const resetFormAndMessages = () => {
-    setFormData({ userName: '', phoneNumber: '', email: '' });
+    setFormData({ userName: '', phoneNumber: '' });
     setSelectedNumber(null);
     setShowBookingForm(false);
     setTimeout(() => {
@@ -253,21 +249,7 @@ function Booking() {
                   title="Please enter a 10-digit phone number"
                 />
               </div>
-              <div>
-                <label htmlFor="email" className="block text-gray-700 text-sm font-semibold mb-1">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition duration-150"
-                  placeholder="e.g., your.email@example.com"
-                  required
-                />
-              </div>
+             
               <div className="flex justify-end space-x-3">
                 <button
                   type="button"

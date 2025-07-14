@@ -1,6 +1,7 @@
 import React from 'react';
 
 function ExportBookings() {
+  // const API_URL=process.env.REACT_APP_API_BASE_URL;
   const handleExport = () => {
     window.open('https://book-number.onrender.com/api/bookings/excel', '_blank');
   };
