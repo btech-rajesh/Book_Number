@@ -18,14 +18,7 @@ const BookingSchema = new mongoose.Schema({
     trim: true,
     match: [/^\d{10}$/, 'Please enter a valid 10-digit phone number.'] // Basic 10-digit validation
   },
-  email: {
-    type: String,
-    required: false,
-    unique: false,
-    trim: true,
-    lowercase: true,
-    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please enter a valid email address.']
-  },
+  
   bookingDate: {
     type: Date,
     required: true,
@@ -33,7 +26,8 @@ const BookingSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-  },
+  }
+  
 });
 BookingSchema.index({ number: 1, bookingDate: 1 }, { unique: true });
 

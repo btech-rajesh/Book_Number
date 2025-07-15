@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Home from './components/Home';
 import Booking from './Booking';
 import ExportBookings from './ExportsBooking';
+import Footer from './layout/Footer';
 
-// Main App component for the booking system
 function App() {
-  // State to hold the list of available numbers fetched from the backend
   return (
-    <>
-  
-
-  <Booking />
-  <ExportBookings />
-  </>
-  )
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/booking" element={<Booking />} />
+      <Route path="/admin/export" element={<ExportBookings />} />
+    </Routes>
+    
+  );
 }
 
 export default App;

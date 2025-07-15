@@ -1,7 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
-
+import { useNavigate } from 'react-router-dom';
+import Navbar from './layout/Navbar';
 function Booking() {
+  const navigate=useNavigate();
+  
+
+
   const [availableNumbers, setAvailableNumbers] = useState([]);
   // State to store the number currently selected by the user for booking
   const [selectedNumber, setSelectedNumber] = useState(null);
@@ -20,8 +25,8 @@ function Booking() {
 
   // Define the base URL for your backend API
   // In a production environment, you would use an environment variable here (e.g., process.env.REACT_APP_API_URL)
-  const API_BASE_URL = 'https://book-number.onrender.com/api/bookings';
-
+  const API_BASE_URL = 'http://localhost:5000/api/bookings';
+// https://book-number.onrender.com
   // useEffect hook to fetch available numbers when the component mounts
   // and whenever a booking is successfully made (to refresh the list)
   useEffect(() => {
@@ -125,6 +130,7 @@ function Booking() {
       console.log('Backend response data:', data); // This line is already helpful
 
       if (response.ok) {
+          alert(data.message);
         setMessage({ type: 'success', text: data.message });
         // After successful booking, refresh the available numbers list
         fetchAvailableNumbers();
@@ -158,6 +164,10 @@ function Booking() {
   const allNumbers = Array.from({ length: 100 }, (_, i) => i + 1);
 
   return (
+    <div>
+      <Navbar/>
+      
+   
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4 font-sans">
       <div className="bg-white rounded-xl shadow-2xl p-8 md:p-12 w-full max-w-4xl border border-gray-200">
         <h1 className="text-4xl font-extrabold text-center text-indigo-800 mb-4 animate-fade-in-down">
@@ -271,6 +281,7 @@ function Booking() {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 }

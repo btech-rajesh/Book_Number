@@ -1,6 +1,8 @@
 // routes/bookingRoutes.js
 import express from 'express';
-import { bookNumber, getAvailableNumbers, getAllBookings ,exportBookingsToExcel} from '../controllers/bookingController.js';
+import { bookNumber, getAvailableNumbers, getAllBookings} from '../controllers/bookingController.js';
+import { exportBookingsToExcel } from '../controllers/exportBookinExcel.js';
+
 
 const router = express.Router();
 
@@ -17,5 +19,5 @@ router.get('/available', getAvailableNumbers);
 router.get('/all', getAllBookings);
 
 
-router.get('/excel', exportBookingsToExcel);
+router.post('/excel', exportBookingsToExcel);
 export default router;
