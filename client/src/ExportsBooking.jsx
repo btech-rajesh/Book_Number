@@ -8,7 +8,7 @@ function ExportBookings() {
 // https://book-number.onrender.com
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/bookings/excel',
+        'https://book-number.onrender.com/api/bookings/excel',
         { password },
         { responseType: 'blob' } // Needed to receive file as binary
       );

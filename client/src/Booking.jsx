@@ -25,7 +25,7 @@ function Booking() {
 
   // Define the base URL for your backend API
   // In a production environment, you would use an environment variable here (e.g., process.env.REACT_APP_API_URL)
-  const API_BASE_URL = 'http://localhost:5000/api/bookings';
+  const API_BASE_URL = 'https://book-number.onrender.com/api/bookings';
 // https://book-number.onrender.com
   // useEffect hook to fetch available numbers when the component mounts
   // and whenever a booking is successfully made (to refresh the list)
